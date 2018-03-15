@@ -79,6 +79,52 @@ hist_feat = False
 hog_feat = True 
 ```
 
+### Feature extraction
+
+We separately extract car and noncar features, and generate appropriate labels, i.e. 0 and 1 for noncar and car images, respectively. Then we put the car and noncar vectors together and split them into training and test datasets. The feature data is scaled - this is probably not required if we use only the HOG feature data, but it is kept in for consistency. The scaler is fit using only the training data, and then used to scale both the training and test data separately. At this point, we are ready to train and test the classifier. 
+
+### Training the SVM classifier
+
+After feature extraction, we train the classifier. The time taken for training and and the test accuracy is listed in the notebook. Typically for different params setting in the feature extraction step, we get about 10 seconds of training time and 96-98 percent accuracy in the testing step. 
+
+### Find cars in the input image
+
+The function _find_cars_ finds cars in the image. The function implements the sliding window search, where the image is essentially divided into multiple overlapping windows and then each window is evaluated to check whether or not it contains the car. If it does, the window is added to the final return list. Eventually, the function returns the list of all the windows where the car was detected. 
+The three important input parameters of the function are _ystart, ystop and scale_:
+
+* _ystart_ and _ystop_ define where to start and where to stop looking at the car, respectively, looking at the vertical dimension of the image. We don't specify xstart and xstop for the horizontal dimension because we search the entire image horizontally. The parameters ystart the ystop allow us to skip searching the image at roughly the top-half where we don't expect to find any cars, and also to search only in certain parts of the image for certain sizes of the cars. For examples, the lower part of the image should contain cars that are closer to us and therefore appear larger in the image, while the part of the image near the middle should contain cars in the distance, which appear smaller in the image. 
+* _scale_ defines whether to scale the image patch or not, and by how much. We typically need to scale the patch under investigation because we trained the classifier with images of fixed size, and the cars can appear smaller or larger than that in the image, depending on how far they are from us. 
+
+Note that find_cars also contains the flag _return_all_rectangles_. If set to _True_, the function returns all the rectangles that were searched, so that we can visualize them and tune the parameters of our pipeline (e.g. in which part of the image should we specify which scale, to increase the detection performance).  
+
+For the test image, we get the rectangles as shown below:
+
+<img src="output_images/test_img_with_rectangles.png" width="480" alt="test_img_with_rectangles" />
+
+### Defining search patches
+
+Now we need to experiment how to define search patches for the image, so that we look at the right place for the right scaling factor. We use the list called _step_config_ to define the y patches for the given scale. 
+
+In the code below, we see that _stop_config_ contains the tuples of 4 numbers: the step between two consecutive horizontal patches, the starting coordinate of the first patch, the scale, and the number of patches. In the example in the next scale, we essentially use two patches of scale 1, the first starting at 400 and the second at 416. 
+
+For different scales, we will define different step configs and then we put them all together into the final pipeline.
+
+The picture below shows windows for scale = 1:
+
+<img src="output_images/windows_scale_1.png" width="480" alt="windows_scale_1" />
+
+The picture below shows windows for scale = 1.5:
+
+<img src="output_images/windows_scale_1.png" width="480" alt="windows_scale_15" />
+
+The picture below shows windows for scale = 2:
+
+<img src="output_images/windows_scale_1.png" width="480" alt="windows_scale_2" />
+
+The picture below shows windows for scale = 3.5:
+
+<img src="output_images/windows_scale_1.png" width="480" alt="windows_scale_35" />
+
 ### Processing pipeline
 
 The processing pipeline performs 4 major steps:
