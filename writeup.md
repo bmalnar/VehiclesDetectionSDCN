@@ -131,6 +131,22 @@ The function _search_all_windows_ combines searching for different scales with d
 
 <img src="output_images/test_img_with_pipeline_rect.png" width="480" alt="test_img_with_pipeline_rect" />
 
+### Heatmap
+
+The fucntion _add_heat_hist_ creates the heatmap for the detected windows. In general, the function starts with zeros across the entire image, and looks at all the pixels in the image together with the windows where the cars are detected. For each pixel, the value is increased by one for each detected window that contains that pixel. Eventually, some pixels will have 0, some will have 1 (detected within the single window), but some will have values greater than 1 if contained within multiple windows. 
+
+The function also has the flag use_hist, so that it can create the heatmap taking into account heatmaps of several previous frames. This helps the drawn bounding boxes to be more stable, because in each frame we don't typically have the same exact detections as in the previous frames (also because the cars are moving). 
+
+For the test image, we get the following heatmap:
+
+<img src="output_images/heatmap.png" width="480" alt="heatmap" />
+
+We can also choose to apply a certain threshold with the heatmap and only keep the values that are above the threshold. This helps especially if we use the history of heatmaps, i.e. heatmaps of several previous frames, but also to eliminate false positives. 
+
+For the test image, we get the following heatmap with threshold:
+
+<img src="output_images/heatmap_thresh.png" width="480" alt="heatmap" />
+
 ### Processing pipeline
 
 The processing pipeline performs 4 major steps:
