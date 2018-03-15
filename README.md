@@ -6,7 +6,7 @@ The repository contains the jupyter notebook implementing the pipeline for detec
 
 An example picture is shown below. 
 
-<img src="output_images/test_orig_detected.jpg" width="480" alt="Combined Image" />
+<img src="output_images/test_orig_detected.png" width="480" alt="Combined Image" />
 
 ### Files and directories content
 - `vehicle_detection_pipeline.ipynb` is a jupyter notebook containing all of the code and the description of each individual steps.  
