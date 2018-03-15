@@ -11,11 +11,11 @@ We load the data and visualize it in at the top of the notebook. There are 'car'
 
 We can see that the car images are mostly showing cars captured from behind, or slightly from the side. This is what we need for training in this case, because we typically see other vehicles on the highway from behind/side in the project video. For general case, we need more variety of angles. An example is shown below:
 
-<img src="output_images/car_image.png" width="480" alt="Car Image" />
+<img src="output_images/car_image.png" width="240" alt="Car Image" />
 
 If we look at the images in the noncar distribution, we see images with road side and empty roads, which is typically what we see looking forward from the car. A typical example is shown below:
 
-<img src="output_images/noncar_image.png" width="480" alt="Noncar Image" />
+<img src="output_images/non_car_image.png" width="240" alt="Noncar Image" />
 
 ### Processing pipeline
 
