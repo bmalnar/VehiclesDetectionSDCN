@@ -123,15 +123,15 @@ The picture below shows windows for scale = 1:
 
 The picture below shows windows for scale = 1.5:
 
-<img src="output_images/windows_scale_1.png" width="480" alt="windows_scale_15" />
+<img src="output_images/windows_scale_1.5.png" width="480" alt="windows_scale_15" />
 
 The picture below shows windows for scale = 2:
 
-<img src="output_images/windows_scale_1.png" width="480" alt="windows_scale_2" />
+<img src="output_images/windows_scale_2.png" width="480" alt="windows_scale_2" />
 
 The picture below shows windows for scale = 3.5:
 
-<img src="output_images/windows_scale_1.png" width="480" alt="windows_scale_35" />
+<img src="output_images/windows_scale_35.png" width="480" alt="windows_scale_35" />
 
 ### Complete search function
 
