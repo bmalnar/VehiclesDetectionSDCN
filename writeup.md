@@ -5,6 +5,18 @@ This is a summary of the work done to develop a processing pipeline for the vehi
 
 More information can be found in the jupyter notebook provided, and here we only provide the high level overview of the pipeline. 
 
+### Data loading and exploration
+
+We load the data and visualize it in at the top of the notebook. There are 'car' and 'noncar' data provided by Udacity. 
+
+We can see that the car images are mostly showing cars captured from behind, or slightly from the side. This is what we need for training in this case, because we typically see other vehicles on the highway from behind/side in the project video. For general case, we need more variety of angles. An example is shown below:
+
+<img src="output_images/car_image.png" width="480" alt="Car Image" />
+
+If we look at the images in the noncar distribution, we see images with road side and empty roads, which is typically what we see looking forward from the car. A typical example is shown below:
+
+<img src="output_images/noncar_image.png" width="480" alt="Noncar Image" />
+
 ### Processing pipeline
 
 The processing pipeline performs 4 major steps:
