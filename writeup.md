@@ -125,6 +125,12 @@ The picture below shows windows for scale = 3.5:
 
 <img src="output_images/windows_scale_1.png" width="480" alt="windows_scale_35" />
 
+### Complete search function
+
+The function _search_all_windows_ combines searching for different scales with different configuration steps. It returns the list of all detected windows for all scales. For the test image, we get the following image with rectangles:
+
+<img src="output_images/test_img_with_pipeline_rect.png" width="480" alt="test_img_with_pipeline_rect" />
+
 ### Processing pipeline
 
 The processing pipeline performs 4 major steps:
