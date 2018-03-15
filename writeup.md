@@ -87,6 +87,14 @@ We separately extract car and noncar features, and generate appropriate labels, 
 
 After feature extraction, we train the classifier. The time taken for training and and the test accuracy is listed in the notebook. Typically for different params setting in the feature extraction step, we get about 10 seconds of training time and 96-98 percent accuracy in the testing step. 
 
+We investigate 3 different feature types for the pipeline (more information can be found in the notebook):
+
+* HOG (histogram of oriented gradients)
+* Color histogram
+* Spatial/template feature
+
+Eventually we decided to use only the HOG features, because it was not conclusive that the other two feature types contributed to the quality of the results. 
+
 ### Find cars in the input image
 
 The function _find_cars_ finds cars in the image. The function implements the sliding window search, where the image is essentially divided into multiple overlapping windows and then each window is evaluated to check whether or not it contains the car. If it does, the window is added to the final return list. Eventually, the function returns the list of all the windows where the car was detected. 
@@ -147,26 +155,34 @@ For the test image, we get the following heatmap with threshold:
 
 <img src="output_images/heatmap_thresh.png" width="480" alt="heatmap" />
 
+### Convert heatmaps to labels
+
+We use the function _labels_ from SciPy to convert heatmap to individual labels. Each "blob" in the heatmap gets its own label, which we can use to eventually draw bounding boxes.
+
+<img src="output_images/labels.png" width="480" alt="labels" />
+
+For each label, we can now draw a rectangle, and that is what the function _draw_labeled_bboxes_ does. This helps us to smooth the edges of the labelled blobs in the figure above. 
+
+<img src="output_images/test_orig_detected.png" width="480" alt="test_orig_detected" />
+
 ### Processing pipeline
 
-The processing pipeline performs 4 major steps:
+The processing pipeline defined in the function _process_frame_ performs 4 major steps:
 
 * Implement the sliding window search for the cars in the image. This is done by practically dividing the input image into windows of different sizes/scales, and looking at each window for a car. If the car is found, the window is remembered, or otherwise it is discarded. We use a linear SVM classifier trained on the input data provided by Udacity. 
 * Based on the windows detected, we create a heatmap of the image, where there is more "heat" in the areas where detections are achieved with larger confidence. 
 * Based on the heatmap, we generate labelled blobs where the cars ar epresumably detected
 * Finally, based on these labels we draw rectangles on top of the input image, so that we can visualize the quality of the detection. 
 
-## Training process
+We tested the final processing pipeline on the six images provided in the test_images folder, with the following results:
 
-Udacity provided the training/test datasets extracted from the KITTI dataset. There are 'car' and 'noncar' images, which are processed and used in the training/testing phase to obtained the trained classifier. 
+<img src="output_images/test_out_0.png" width="480" alt="test_out_0" />
+<img src="output_images/test_out_1.png" width="480" alt="test_out_1" />
+<img src="output_images/test_out_2.png" width="480" alt="test_out_2" />
+<img src="output_images/test_out_3.png" width="480" alt="test_out_3" />
+<img src="output_images/test_out_4.png" width="480" alt="test_out_4" />
+<img src="output_images/test_out_5.png" width="480" alt="test_out_5" />
 
-We investigate 3 different feature types for the pipeline (more information can be found in the notebook):
-
-* HOG (histogram of oriented gradients)
-* Color histogram
-* Spatial/template feature
-
-Eventually we decided to use only the HOG features, because it was not conclusive that the other two feature types contributed to the quality of the results. 
 
 ### Discussion 
 
